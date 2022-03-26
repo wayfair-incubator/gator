@@ -9,6 +9,7 @@ on:
 
 env:
   PYTHON_VERSION: "3.10"
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 jobs:
   bandit:
