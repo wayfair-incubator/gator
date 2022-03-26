@@ -15,7 +15,7 @@ services:
     image: "wayfair/gator-devbox"
     volumes:
       - ./:/app
-      - ~/.gitconfig:/home/gator-core/.gitconfig
+      - ~/.gitconfig:/home/gator/.gitconfig
 
   # run all the tests and linting locally
   # - black & isort will format code to address issues

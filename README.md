@@ -1,2 +1,2 @@
-# gator-core
-Propagator Core CLI + Package
+# gator
+Propagator CLI + Package
