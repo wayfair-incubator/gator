@@ -1,0 +1,51 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: Upload to PyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update_docs_for_version_bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+        with:
+          requirements: "true"
+          test-requirements: "true"
+
+      - name: Push documentation changes
+        uses: ./.github/actions/publish-docs-with-mike
+        with:
+          new_version: true
+
+  build-and-publish-wheel-to-pypi:
+    runs-on: ubuntu-latest
+    environment: "Publish Release"
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Build wheel
+        uses: ./.github/actions/build-dist
+
+        # v1.4.2 release. Using full SHA for security
+        # https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@717ba43cfbb0387f6ce311b169a825772f54d295
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}

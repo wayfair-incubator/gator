@@ -1,0 +1,97 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredPackages">
+        <value>
+          <list size="81">
+            <item index="0" class="java.lang.String" itemvalue="wf-certifi" />
+            <item index="1" class="java.lang.String" itemvalue="wf-logging" />
+            <item index="2" class="java.lang.String" itemvalue="starlette" />
+            <item index="3" class="java.lang.String" itemvalue="cachetools" />
+            <item index="4" class="java.lang.String" itemvalue="marble-snake" />
+            <item index="5" class="java.lang.String" itemvalue="wf-stats" />
+            <item index="6" class="java.lang.String" itemvalue="wf-secrets" />
+            <item index="7" class="java.lang.String" itemvalue="decorator" />
+            <item index="8" class="java.lang.String" itemvalue="GitPython" />
+            <item index="9" class="java.lang.String" itemvalue="pydantic" />
+            <item index="10" class="java.lang.String" itemvalue="mamba-template-core" />
+            <item index="11" class="java.lang.String" itemvalue="aiofiles" />
+            <item index="12" class="java.lang.String" itemvalue="requests" />
+            <item index="13" class="java.lang.String" itemvalue="wf-healthcheck" />
+            <item index="14" class="java.lang.String" itemvalue="gunicorn" />
+            <item index="15" class="java.lang.String" itemvalue="Jinja2" />
+            <item index="16" class="java.lang.String" itemvalue="fastapi" />
+            <item index="17" class="java.lang.String" itemvalue="filelock" />
+            <item index="18" class="java.lang.String" itemvalue="semver" />
+            <item index="19" class="java.lang.String" itemvalue="wf-feature-toggle" />
+            <item index="20" class="java.lang.String" itemvalue="inflect" />
+            <item index="21" class="java.lang.String" itemvalue="aerospike" />
+            <item index="22" class="java.lang.String" itemvalue="uvicorn" />
+            <item index="23" class="java.lang.String" itemvalue="wf-aerospike" />
+            <item index="24" class="java.lang.String" itemvalue="columbo" />
+            <item index="25" class="java.lang.String" itemvalue="jira" />
+            <item index="26" class="java.lang.String" itemvalue="pygitops" />
+            <item index="27" class="java.lang.String" itemvalue="wf-config" />
+            <item index="28" class="java.lang.String" itemvalue="cookiecutter" />
+            <item index="29" class="java.lang.String" itemvalue="black" />
+            <item index="30" class="java.lang.String" itemvalue="isort" />
+            <item index="31" class="java.lang.String" itemvalue="packaging" />
+            <item index="32" class="java.lang.String" itemvalue="dataclasses" />
+            <item index="33" class="java.lang.String" itemvalue="pygithub" />
+            <item index="34" class="java.lang.String" itemvalue="ddtrace" />
+            <item index="35" class="java.lang.String" itemvalue="dephealth" />
+            <item index="36" class="java.lang.String" itemvalue="beautifulsoup4" />
+            <item index="37" class="java.lang.String" itemvalue="marble_snake" />
+            <item index="38" class="java.lang.String" itemvalue="wf_config" />
+            <item index="39" class="java.lang.String" itemvalue="wf_certifi" />
+            <item index="40" class="java.lang.String" itemvalue="wf-db" />
+            <item index="41" class="java.lang.String" itemvalue="PyJWT" />
+            <item index="42" class="java.lang.String" itemvalue="yamlpath" />
+            <item index="43" class="java.lang.String" itemvalue="api-guard" />
+            <item index="44" class="java.lang.String" itemvalue="python-multipart" />
+            <item index="45" class="java.lang.String" itemvalue="pdpyras" />
+            <item index="46" class="java.lang.String" itemvalue="PyYAML" />
+            <item index="47" class="java.lang.String" itemvalue="sqlalchemy" />
+            <item index="48" class="java.lang.String" itemvalue="confluent-kafka" />
+            <item index="49" class="java.lang.String" itemvalue="kubernetes" />
+            <item index="50" class="java.lang.String" itemvalue="pyyaml" />
+            <item index="51" class="java.lang.String" itemvalue="click" />
+            <item index="52" class="java.lang.String" itemvalue="google-cloud-storage" />
+            <item index="53" class="java.lang.String" itemvalue="wf_gcs" />
+            <item index="54" class="java.lang.String" itemvalue="gitdb" />
+            <item index="55" class="java.lang.String" itemvalue="types-cachetools" />
+            <item index="56" class="java.lang.String" itemvalue="types-PyYAML" />
+            <item index="57" class="java.lang.String" itemvalue="types-requests" />
+            <item index="58" class="java.lang.String" itemvalue="google-cloud-bigquery" />
+            <item index="59" class="java.lang.String" itemvalue="analytics-jazz-interface" />
+            <item index="60" class="java.lang.String" itemvalue="kronos-api-client" />
+            <item index="61" class="java.lang.String" itemvalue="analytics-db-core" />
+            <item index="62" class="java.lang.String" itemvalue="analytics-parsing-core" />
+            <item index="63" class="java.lang.String" itemvalue="analytics-auth-core" />
+            <item index="64" class="java.lang.String" itemvalue="analytics-jenkins-api" />
+            <item index="65" class="java.lang.String" itemvalue="forbidden-fruit" />
+            <item index="66" class="java.lang.String" itemvalue="ldap3" />
+            <item index="67" class="java.lang.String" itemvalue="google-cloud-dlp" />
+            <item index="68" class="java.lang.String" itemvalue="google-cloud-datacatalog" />
+            <item index="69" class="java.lang.String" itemvalue="analytics-data-pipeline" />
+            <item index="70" class="java.lang.String" itemvalue="google-cloud-pubsub" />
+            <item index="71" class="java.lang.String" itemvalue="analytics-cloud-core" />
+            <item index="72" class="java.lang.String" itemvalue="proto-plus" />
+            <item index="73" class="java.lang.String" itemvalue="analytics-ldap-core" />
+            <item index="74" class="java.lang.String" itemvalue="google-cloud-dataproc" />
+            <item index="75" class="java.lang.String" itemvalue="kronos-conduct-client" />
+            <item index="76" class="java.lang.String" itemvalue="pygsuite" />
+            <item index="77" class="java.lang.String" itemvalue="pyodbc" />
+            <item index="78" class="java.lang.String" itemvalue="google-auth" />
+            <item index="79" class="java.lang.String" itemvalue="faker" />
+            <item index="80" class="java.lang.String" itemvalue="pyjwt" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="SqlDialectInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="SqlNoDataSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+  </profile>
+</component>
