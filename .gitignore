@@ -2,8 +2,9 @@
 
 codecov
 set_env_vars.sh
-cloned_repos/
+cloned_repos
 .idea
+lockfiles
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
