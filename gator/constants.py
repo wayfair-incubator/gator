@@ -1,3 +1,10 @@
+import re
+
 # Resource Values
 RESOURCE_KIND_GENERIC = "GenericResource"
 RESOURCE_VERSION_UNUSABLE = "Unusable"
+
+
+DEFAULT_REGEX_MODES = re.MULTILINE
+
+GIT_INTERNALS_DIRECTORY = ".git"
