@@ -29,7 +29,6 @@ class RegexFilterV1Alpha(FilterResource):
         This content is recursively generated from the specified paths.
 
         :param path: The Github repository to perform the match against.
-        :raises FilterExecutionError:
         :return: Whether or not the match was present
         """
 
