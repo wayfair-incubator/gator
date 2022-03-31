@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/gator-core.iml" filepath="$PROJECT_DIR$/.idea/gator-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gator.iml" filepath="$PROJECT_DIR$/.idea/gator.iml" />
     </modules>
   </component>
 </project>

@@ -1,6 +1,10 @@
 # User-added values
 
 codecov
+set_env_vars.sh
+cloned_repos
+.idea
+lockfiles
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
