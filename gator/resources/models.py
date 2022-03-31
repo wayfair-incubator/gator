@@ -22,7 +22,8 @@ class GatorResourceSpec(BaseModelForbidExtra):
     """
 
 
-# Hierarchy of metaclasses: `ValidateGatorResource` extends `pydantic.main.ModelMetaclass` extends `abc.ABCMeta`
+# Hierarchy of metaclasses: `ValidateGatorResource` extends
+# `pydantic.main.ModelMetaclass` extends `abc.ABCMeta`
 # Classes using `metaclass=GatorResourceMetaclass` must assume inclusion of the base metaclasses
 class GatorResourceMetaclass(ModelMetaclass):
     def __new__(meta, name, bases, class_dict):
