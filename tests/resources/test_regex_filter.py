@@ -18,7 +18,7 @@ def test_regex_filter_v1_alpha__single_path_specified__path_dne__filter_match_no
 ):
     resource = RegexFilterV1Alpha(
         spec=RegexFilterV1AlphaSpec(
-            regex=SOME_REGEX_PYTHON_VERSION, paths=[str(tmp_path)]
+            regex=SOME_REGEX_PYTHON_VERSION, paths=[str(tmp_path / SOME_FILE_NAME)]
         )
     )
 
