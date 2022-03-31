@@ -3,7 +3,7 @@
 codecov
 set_env_vars.sh
 cloned_repos
-.idea
+.idea/
 lockfiles
 
 # Byte-compiled / optimized / DLL files
