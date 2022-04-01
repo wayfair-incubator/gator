@@ -69,7 +69,8 @@ def _assert_dirs_identical(dir1: Path, dir2: Path):
             f"The set of files and directories in the left list {file_compare.left_list} is not identical to the set of files in the right list {file_compare.right_list}"
         )
 
-    if diff := file_compare.diff_files:
+    diff = file_compare.diff_files
+    if diff:
         raise AssertionError(
             f"There are files whose content differ between the two directories: {diff}"
         )
