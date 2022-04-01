@@ -1,19 +1,23 @@
-from typing import Dict, Type
+from typing import Dict, List, Optional, Type
 
 import yaml
-from pydantic import ValidationError, parse_obj_as
+from pydantic import ValidationError
 
-from gator.exceptions import InvalidSpecificationError
-from gator.resources.changeset import Changeset
+from gator.exceptions import InvalidResourceError, InvalidSpecificationError
 from gator.resources.code_changes import (
     NewFileCodeChangeV1Alpha,
     RegexReplaceCodeChangeV1Alpha,
     RemoveFileCodeChangeV1Alpha,
 )
 from gator.resources.filters.regex_filter import RegexFilterV1Alpha
-from gator.resources.models import GatorResource
+from gator.resources.models import (
+    BaseModelForbidExtra,
+    CodeChangeResource,
+    FilterResource,
+    GatorResource,
+)
 
-ACTIVE_RESOURCES: Dict[str, Type[GatorResource]] = {
+ACTIVE_RESOURCES = {
     "NewFileCodeChange": NewFileCodeChangeV1Alpha,
     "RemoveFileCodeChange": RemoveFileCodeChangeV1Alpha,
     "RegexReplaceCodeChange": RegexReplaceCodeChangeV1Alpha,
@@ -21,23 +25,37 @@ ACTIVE_RESOURCES: Dict[str, Type[GatorResource]] = {
 }
 
 
-def build_gator_resource(resource_dict: Dict) -> GatorResource:
-    if "kind" not in resource_dict:
-        raise InvalidSpecificationError(
-            "Resources must have a 'kind' field at the top level"
-        )
+class _ResourceWithValidation(GatorResource):
+    """Define a subclass of Gator Resource that tricks"""
 
-    _class = ACTIVE_RESOURCES.get(resource_dict["kind"])
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.return_kind
 
-    if not _class:
-        raise InvalidSpecificationError(
-            f"Resource kind: {resource_dict['kind']} is not active"
-        )
+    @classmethod
+    def return_kind(cls, values):
+        try:
+            kind = values["kind"]
+        except KeyError:
+            raise ValueError(f"Missing required 'kind' field for kind: {values}")
+        try:
+            return ACTIVE_RESOURCES[kind].parse_obj(values)
+        except KeyError:
+            raise ValueError(f"Incorrect kind: {kind}")
 
-    try:
-        return _class.parse_obj(resource_dict)
-    except ValidationError as e:
-        raise InvalidSpecificationError from e
+
+class ChangesetSpecV1AlphaSpec(BaseModelForbidExtra):
+    name: str
+    issue_title: Optional[str]
+    issue_body: Optional[str]
+    filters: Optional[List[_ResourceWithValidation]]
+    code_changes: Optional[List[_ResourceWithValidation]]
+
+
+class Changeset(BaseModelForbidExtra):
+    kind = "Changeset"
+    version = "v1alpha"
+    spec: ChangesetSpecV1AlphaSpec
 
 
 def build_changeset(spec: str) -> Changeset:
@@ -54,6 +72,44 @@ def build_changeset(spec: str) -> Changeset:
         raise InvalidSpecificationError from e
 
     try:
-        return parse_obj_as(Changeset, changeset_dict)
+        return Changeset.parse_obj(changeset_dict)
     except ValidationError as e:
         raise InvalidSpecificationError from e
+
+
+def build_gator_resource(resource_dict: Dict) -> GatorResource:
+    """Build a Gator Resource given"""
+    kind = resource_dict.get("kind")
+    if not kind:
+        raise InvalidSpecificationError(
+            "Resource is not valid, must contain top-level field 'kind'"
+        )
+
+    resource_class = ACTIVE_RESOURCES.get(kind)
+    if not resource_class:
+        raise InvalidSpecificationError(f"No active resources found of kind: {kind}")
+
+    try:
+        return resource_class.parse_obj(resource_dict)
+    except ValidationError as e:
+        raise InvalidSpecificationError(
+            "Could not parse resource spec into the corresponding model"
+        ) from e
+
+
+def register_custom_resource(resource_class: Type) -> None:
+    """
+    Register a custom Gator resource.
+    """
+    global ACTIVE_RESOURCES
+
+    if not issubclass(resource_class, CodeChangeResource) or issubclass(
+        resource_class, FilterResource
+    ):
+        raise InvalidResourceError(
+            "Resource must subclass either CodeChangeResource or FilterResource"
+        )
+
+    ACTIVE_RESOURCES[
+        resource_class.schema()["properties"]["kind"]["const"]
+    ] = resource_class
