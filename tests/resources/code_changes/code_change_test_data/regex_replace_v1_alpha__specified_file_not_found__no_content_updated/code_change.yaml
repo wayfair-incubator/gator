@@ -1,0 +1,8 @@
+- kind: RegexReplaceCodeChange
+  version: v1alpha
+  spec:
+    replacement_details:
+    - regex: .*
+      paths:
+      - does_not_exist.txt
+      replace_term: foobar

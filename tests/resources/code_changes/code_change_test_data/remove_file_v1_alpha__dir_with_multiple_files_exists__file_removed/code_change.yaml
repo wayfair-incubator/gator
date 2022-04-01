@@ -1,0 +1,5 @@
+- kind: RemoveFileCodeChange
+  version: v1alpha
+  spec:
+    files:
+    - some_dir/foobar.txt

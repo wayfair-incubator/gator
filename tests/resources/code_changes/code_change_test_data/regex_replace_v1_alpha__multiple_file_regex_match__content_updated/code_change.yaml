@@ -1,0 +1,9 @@
+- kind: RegexReplaceCodeChange
+  version: v1alpha
+  spec:
+    replacement_details:
+    - regex: pygitops
+      paths:
+      - requirements.txt
+      - requirements.lock
+      replace_term: pygitops==0.10.0

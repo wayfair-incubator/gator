@@ -5,6 +5,7 @@ set_env_vars.sh
 cloned_repos
 .idea/
 lockfiles
+testpad.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

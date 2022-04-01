@@ -1,0 +1,6 @@
+- kind: NewFileCodeChange
+  version: v1alpha
+  spec:
+    files:
+    - file_path: new_dir/foobar.txt
+      file_content: some content
