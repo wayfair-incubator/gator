@@ -178,6 +178,7 @@ def test_register_custom_resource__no_kind_field__raises_error():
     ):
 
         class SomeClass(CodeChangeResource):
-            pass
+            def make_code_changes(self, repo_path: Path) -> None:
+                pass
 
         register_custom_resource(SomeClass)
