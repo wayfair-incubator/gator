@@ -1,0 +1,8 @@
+- kind: NewFileCodeChange
+  version: v1alpha
+  spec:
+    files:
+    - file_path: foobar.txt
+      file_content: some content
+    - file_path: barbaz.txt
+      file_content: some other content

@@ -1,6 +1,9 @@
 import pytest
 
-from gator.resources.regex_filter import RegexFilterV1Alpha, RegexFilterV1AlphaSpec
+from gator.resources.filters.regex_filter import (
+    RegexFilterV1Alpha,
+    RegexFilterV1AlphaSpec,
+)
 
 SOME_REGEX = ".*"
 SOME_FILE_NAME = "foo.txt"

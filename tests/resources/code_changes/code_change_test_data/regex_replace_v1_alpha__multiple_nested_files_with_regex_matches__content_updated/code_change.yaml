@@ -1,0 +1,8 @@
+- kind: RegexReplaceCodeChange
+  version: v1alpha
+  spec:
+    replacement_details:
+    - regex: pygitops 
+      paths:
+      - .
+      replace_term: pygitops==0.10.0

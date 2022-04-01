@@ -1,0 +1,6 @@
+- kind: NewFileCodeChange
+  version: v1alpha
+  spec:
+    files:
+    - file_path: requirements.txt
+      file_content: some overridden content

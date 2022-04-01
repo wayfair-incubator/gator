@@ -1,10 +1,17 @@
 from abc import abstractmethod
+from enum import Enum
 from pathlib import Path
+from typing import Any, Dict
 
 from pydantic import BaseModel
-from pydantic.main import ModelMetaclass
 
 from gator.constants import RESOURCE_KIND_GENERIC, RESOURCE_VERSION_UNUSABLE
+
+
+class GatorResourceType(Enum):
+    FILTER = "filter"
+    CODE_CHANGE = "code_change"
+    CHANGESET = "changeset"
 
 
 class BaseModelForbidExtra(BaseModel):
@@ -22,34 +29,15 @@ class GatorResourceSpec(BaseModelForbidExtra):
     """
 
 
-# Hierarchy of metaclasses: `ValidateGatorResource` extends
-# `pydantic.main.ModelMetaclass` extends `abc.ABCMeta`
-# Classes using `metaclass=GatorResourceMetaclass` must assume inclusion of the base metaclasses
-class GatorResourceMetaclass(ModelMetaclass):
-    def __new__(meta, name, bases, class_dict):
-        """
-        Validate class definitions upon initial module load.
-        """
-
-        if not class_dict.get("kind", "") or not class_dict.get("version", ""):
-            raise ValueError(
-                "GatorResources must define `kind` and `version` class properties"
-            )
-
-        return type.__new__(meta, name, bases, class_dict)
-
-
 class GatorResource(BaseModelForbidExtra):
     """
     GatorResources define a specific `kind`, `version`, and associated spec fields.
     """
 
-    kind: str = ""
-    version: str = ""
     spec: GatorResourceSpec
 
 
-class FilterResource(GatorResource, metaclass=GatorResourceMetaclass):
+class FilterResource(GatorResource):
 
     kind = RESOURCE_KIND_GENERIC
     version = RESOURCE_VERSION_UNUSABLE
@@ -64,7 +52,7 @@ class FilterResource(GatorResource, metaclass=GatorResourceMetaclass):
         ...
 
 
-class CodeChangeResource(GatorResource, metaclass=GatorResourceMetaclass):
+class CodeChangeResource(GatorResource):
 
     kind = RESOURCE_KIND_GENERIC
     version = RESOURCE_VERSION_UNUSABLE
@@ -78,3 +66,13 @@ class CodeChangeResource(GatorResource, metaclass=GatorResourceMetaclass):
         :repo_path: The path to the directory where repository content exists
         """
         ...
+
+
+class GatorResourceData(BaseModelForbidExtra):
+    """
+    Represents shape of data provided to `build_gator_resource()`.
+    """
+
+    kind: str
+    version: str
+    spec: Dict[str, Any]
