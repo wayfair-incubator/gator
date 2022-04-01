@@ -4,11 +4,7 @@ from pathlib import Path
 from typing import List, Pattern
 
 from gator.constants import VERSION_V1_ALPHA
-from gator.resources.models import (
-    BaseModelForbidExtra,
-    CodeChangeResource,
-    GatorResourceSpec,
-)
+from gator.resources.models import BaseModelForbidExtra, CodeChangeResource
 from gator.resources.util import get_recursive_path_contents
 
 _logger = logging.getLogger(__name__)
@@ -20,7 +16,7 @@ class RegexReplacementDetails(BaseModelForbidExtra):
     replace_term: str
 
 
-class RegexReplaceCodeChangeV1AlphaSpec(GatorResourceSpec):
+class RegexReplaceCodeChangeV1AlphaSpec(BaseModelForbidExtra):
     replacement_details: List[RegexReplacementDetails]
 
 

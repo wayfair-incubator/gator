@@ -4,12 +4,12 @@ from pathlib import Path
 from typing import List
 
 from gator.constants import VERSION_V1_ALPHA
-from gator.resources.models import CodeChangeResource, GatorResourceSpec
+from gator.resources.models import BaseModelForbidExtra, CodeChangeResource
 
 _logger = logging.getLogger(__name__)
 
 
-class RemoveFileCodeChangeV1AlphaSpec(GatorResourceSpec):
+class RemoveFileCodeChangeV1AlphaSpec(BaseModelForbidExtra):
     files: List[str]
 
 

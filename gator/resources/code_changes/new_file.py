@@ -4,11 +4,7 @@ from pathlib import Path
 from typing import List
 
 from gator.constants import VERSION_V1_ALPHA
-from gator.resources.models import (
-    BaseModelForbidExtra,
-    CodeChangeResource,
-    GatorResourceSpec,
-)
+from gator.resources.models import BaseModelForbidExtra, CodeChangeResource
 
 _logger = logging.getLogger(__name__)
 
@@ -18,7 +14,7 @@ class FileDetails(BaseModelForbidExtra):
     file_content: str
 
 
-class NewFileCodeChangeV1AlphaSpec(GatorResourceSpec):
+class NewFileCodeChangeV1AlphaSpec(BaseModelForbidExtra):
     files: List[FileDetails]
 
 

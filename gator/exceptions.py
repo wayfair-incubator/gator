@@ -6,5 +6,5 @@ class InvalidSpecificationError(GatorError):
     """There was an error with retrieving specification data."""
 
 
-class FilterExecutionError(GatorError):
-    """There was an error executing logic for a FilterResource."""
+class InvalidResourceError(GatorError):
+    """The given custom resource definition was not valid."""

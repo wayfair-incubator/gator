@@ -4,13 +4,13 @@ from pathlib import Path
 from typing import List
 
 from gator.constants import DEFAULT_REGEX_MODES
-from gator.resources.models import FilterResource, GatorResourceSpec
+from gator.resources.models import BaseModelForbidExtra, FilterResource
 from gator.resources.util import get_recursive_path_contents
 
 _logger = logging.getLogger(__name__)
 
 
-class RegexFilterV1AlphaSpec(GatorResourceSpec):
+class RegexFilterV1AlphaSpec(BaseModelForbidExtra):
     regex: str
     paths: List[str]
 
