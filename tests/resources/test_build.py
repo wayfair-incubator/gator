@@ -1,7 +1,16 @@
-import pytest
+from pathlib import Path
 
-from gator.exceptions import InvalidSpecificationError
-from gator.resources.build import build_changeset, build_gator_resource
+import pytest
+import yaml
+from pydantic import BaseModel
+
+from gator.exceptions import InvalidResourceError, InvalidSpecificationError
+from gator.resources.build import (
+    CodeChangeResource,
+    build_changeset,
+    build_gator_resource,
+    register_custom_resource,
+)
 
 SOME_INVALID_YAML = """not: real: \n- : -"""
 SOME_INVALID_CHANGESET = """
@@ -61,6 +70,47 @@ spec:
                 - "requirements-test.txt"
 """
 
+SOME_VALID_RESOURCE = """
+kind: RegexReplaceCodeChange
+version: v1alpha
+spec:
+  replacement_details:
+    - regex: '(?<=black==)(22.1.0|21.w+)'
+      replace_term: "22.3.0"
+      paths:
+        - "requirements-test.txt"
+"""
+
+DO_NOTHING_CHANGESET = """
+kind: Changeset
+version: v1alpha
+spec:
+  name: time to do a thing
+  issue_title: stuff
+  issue_body: other stuff
+  code_changes:
+      - kind: DoNothingCodeChange
+        version: v1alpha
+        spec:
+          some_value: "concrete value"
+"""
+
+
+class DoNothingSpec(BaseModel):
+    some_value: str
+
+
+class DoNothingCodeChange(CodeChangeResource):
+    kind = "DoNothingCodeChange"
+    version = "v1alpha"
+    spec: DoNothingSpec
+
+    def make_code_changes(self, path: Path) -> None:
+        pass
+
+    class Config:
+        extra = "forbid"
+
 
 @pytest.mark.parametrize(
     "spec",
@@ -98,3 +148,36 @@ def test_build_gator_resource__invalid__raises_invalid_specification_error(spec,
     with pytest.raises(InvalidSpecificationError, match=match):
         build_gator_resource(spec)
 
+
+def test_build_gator_resource__valid__works():
+    objects = yaml.safe_load(SOME_VALID_RESOURCE)
+    build_gator_resource(objects)
+
+
+def test_register_custom_resource__valid__works():
+    register_custom_resource(DoNothingCodeChange)
+    build_changeset(DO_NOTHING_CHANGESET)
+
+
+def test_register_custom_resource__doesnt_subclass_appropriate_classes__raises_error():
+    with pytest.raises(
+        InvalidResourceError,
+        match="Resource must subclass either CodeChangeResource or FilterResource",
+    ):
+
+        class SomeClass:
+            pass
+
+        register_custom_resource(SomeClass)
+
+
+def test_register_custom_resource__no_kind_field__raises_error():
+    with pytest.raises(
+        InvalidResourceError,
+        match="Custom resource must define a class variable.*",
+    ):
+
+        class SomeClass(CodeChangeResource):
+            pass
+
+        register_custom_resource(SomeClass)

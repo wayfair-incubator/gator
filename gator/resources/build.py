@@ -78,7 +78,13 @@ def build_changeset(spec: str) -> Changeset:
 
 
 def build_gator_resource(resource_dict: Dict) -> GatorResource:
-    """Build a Gator Resource given"""
+    """
+    Build a Gator Resource Pydantic model from a dictionary representation.
+
+    :param resource_dict: dictionary representation of the resource to build a model for.
+    :raises InvalidSpecificationError: If the resource dict could not be built into a model.
+    :return: Fully-constructed and validated GatorResource.
+    """
     kind = resource_dict.get("kind")
     if not kind:
         raise InvalidSpecificationError(
@@ -100,6 +106,10 @@ def build_gator_resource(resource_dict: Dict) -> GatorResource:
 def register_custom_resource(resource_class: Type) -> None:
     """
     Register a custom Gator resource.
+
+    Use this function to register a custom resource with Gator. This
+    :param resource_class: Pydantic class, extending CodeChangeResource or FilterResource,
+        that contains the business logic for executing the resource
     """
     global ACTIVE_RESOURCES
 
@@ -110,6 +120,11 @@ def register_custom_resource(resource_class: Type) -> None:
             "Resource must subclass either CodeChangeResource or FilterResource"
         )
 
-    ACTIVE_RESOURCES[
-        resource_class.schema()["properties"]["kind"]["const"]
-    ] = resource_class
+    try:
+        ACTIVE_RESOURCES[
+            resource_class.schema()["properties"]["kind"]["const"]
+        ] = resource_class
+    except KeyError:
+        raise InvalidResourceError(
+            "Custom resource must define a class variable 'kind'"
+        )
