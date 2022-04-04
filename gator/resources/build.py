@@ -26,7 +26,13 @@ ACTIVE_RESOURCES = {
 
 
 class _ResourceWithValidation(GatorResource):
-    """Define a subclass of Gator Resource that tricks"""
+    """
+    Define a subclass of Gator Resource for Pydantic deserialization purposes.
+
+    This subclass uses Pydantic validators to look up the classes associated
+    with given resource names in a registry, allowing deserialization of
+    resources not present in the registry at import time (Custom Resources).
+    """
 
     @classmethod
     def __get_validators__(cls):
@@ -45,6 +51,7 @@ class _ResourceWithValidation(GatorResource):
 
 
 class ChangesetSpecV1AlphaSpec(BaseModelForbidExtra):
+    """Changeset Specification."""
     name: str
     issue_title: Optional[str]
     issue_body: Optional[str]
@@ -53,6 +60,7 @@ class ChangesetSpecV1AlphaSpec(BaseModelForbidExtra):
 
 
 class Changeset(BaseModelForbidExtra):
+    """Define Changeset."""
     kind = "Changeset"
     version = "v1alpha"
     spec: ChangesetSpecV1AlphaSpec
@@ -107,7 +115,7 @@ def register_custom_resource(resource_class: Type) -> None:
     """
     Register a custom Gator resource.
 
-    Use this function to register a custom resource with Gator. This
+    Use this function to register a custom resource with Gator.
     :param resource_class: Pydantic class, extending CodeChangeResource or FilterResource,
         that contains the business logic for executing the resource
     """
