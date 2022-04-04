@@ -31,32 +31,32 @@ spec:
 
 print(build_changeset(spec))
 
-# class DoNothingSpec(BaseModel):
-#     some_value: str
-#
-# class DoNothingCodeChange(CodeChangeResource):
-#     kind = 'DoNothingCodeChange'
-#     version = 'v1alpha'
-#     spec: DoNothingSpec
-#
-#     def make_code_changes(self, path: Path) -> None:
-#         pass
-#
-# register_custom_resource(DoNothingCodeChange)
-#
-# another_spec = """
-# kind: Changeset
-# version: v1alpha
-# spec:
-#   name: time to do a thing
-#   issue_title: stuff
-#   issue_body: other stuff
-#   code_changes:
-#       - kind: DoNothingCodeChange
-#         version: v1alpha
-#         spec:
-#           some_value: "concrete value"
-#
-# """
-#
-# print(build_changeset(another_spec))
+class DoNothingSpec(BaseModel):
+    some_value: str
+
+class DoNothingCodeChange(CodeChangeResource):
+    kind = 'DoNothingCodeChange'
+    version = 'v1alpha'
+    spec: DoNothingSpec
+
+    def make_code_changes(self, path: Path) -> None:
+        pass
+
+register_custom_resource(DoNothingCodeChange)
+
+another_spec = """
+kind: Changeset
+version: v1alpha
+spec:
+  name: time to do a thing
+  issue_title: stuff
+  issue_body: other stuff
+  code_changes:
+      - kind: DoNothingCodeChange
+        version: v1alpha
+        spec:
+          some_value: "concrete value"
+
+"""
+
+print(build_changeset(another_spec))
