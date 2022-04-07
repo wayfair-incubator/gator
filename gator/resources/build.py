@@ -52,6 +52,7 @@ class _ResourceWithValidation(GatorResource):
 
 class ChangesetSpecV1AlphaSpec(BaseModelForbidExtra):
     """Changeset Specification."""
+
     name: str
     issue_title: Optional[str]
     issue_body: Optional[str]
@@ -61,6 +62,7 @@ class ChangesetSpecV1AlphaSpec(BaseModelForbidExtra):
 
 class Changeset(BaseModelForbidExtra):
     """Define Changeset."""
+
     kind = "Changeset"
     version = "v1alpha"
     spec: ChangesetSpecV1AlphaSpec
