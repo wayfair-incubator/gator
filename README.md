@@ -1,2 +1,0 @@
-# gator
-Propagator CLI + Package
