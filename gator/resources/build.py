@@ -138,3 +138,17 @@ def register_custom_resource(resource_class: Type) -> None:
         raise InvalidResourceError(
             "Custom resource must define a class variable 'kind'"
         )
+
+
+def build_changeset_from_file(filepath: str) -> Changeset:
+    """
+    Build a changeset spec object from the content in the file at the given filepath.
+
+    :param filepath: Filepath containing raw changeset spec
+
+    :raises InvalidSpecificationError: If the changeset was not valid
+    :raises IOError: If the provided filepath cannot be read
+    """
+
+    with open(filepath, "r") as spec_file:
+        return build_changeset(spec_file.read())

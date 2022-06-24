@@ -8,3 +8,11 @@ class InvalidSpecificationError(GatorError):
 
 class InvalidResourceError(GatorError):
     """The given custom resource definition was not valid."""
+
+
+class ConfigurationError(GatorError):
+    """There was an error related to the configuration."""
+
+
+class GitOperationError(GatorError):
+    """Git or Github Related Error."""

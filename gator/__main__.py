@@ -1,6 +1,11 @@
+import logging
+
 import click
 
-from gator.pre_process import preprocess_repository
+from gator.configuration import Configuration, set_configuration
+from gator.resources.build import build_changeset_from_file
+
+_logger = logging.getLogger(__name__)
 
 
 @click.group()
@@ -12,22 +17,39 @@ def cli():
 @click.option("--github-username", envvar="GATOR_GITHUB_USERNAME")
 @click.option("--github-token", envvar="GATOR_GITHUB_TOKEN")
 @click.option("--github-domain", envvar="GATOR_GITHUB_DOMAIN")
-@click.option("--repository")
+@click.option("--dry-run", envvar="IS_DRY_RUN", flag=True)
+@click.option("--changeset-file", "changeset")
+@click.option(
+    "--repository-names",
+    help="Comma separated list of full names, eg some-org/some-repo,some-org/some-other-repo",
+)
 def run(
     github_username: str,
     github_token: str,
     github_domain: str,
-    repository: str,
+    repository_names: str,
+    dry_run: bool,
+    changeset_file: str,
 ):
-    click.echo(f"Running Gator on {repository}...")
+    """The main entrypoint for running Gator."""
 
-    preprocess_repository(
-        github_username,
-        github_token,
-        repository.split("/")[0],
-        repository.split("/")[1],
-        github_domain,
+    _logger.info("Parsing changeset specification...")
+    changeset = build_changeset_from_file(changeset_file)
+
+    _logger.info("Initializing configuration...")
+
+    set_configuration(
+        Configuration(
+            dry_run=dry_run,
+            repositories=repository_names.split(","),
+            changeset=changeset,
+            github_domain=github_domain,
+            github_token=github_token,
+            github_username=github_username,
+        )
     )
+
+    click.echo("Running Gator...")
 
     click.echo("Done.")
 
